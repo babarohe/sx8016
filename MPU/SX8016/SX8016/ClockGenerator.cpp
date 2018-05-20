@@ -8,40 +8,67 @@ void ClockGenerator::initClock() {
 	/*
 	* クロック初期化
 	*/
-	start = system_clock::now();
+	// 開始時刻兼高精度補正用カウンター
+	QueryPerformanceCounter(&init_host_counter);
+
 
 }
 
 void ClockGenerator::generateClock(int freq) {
-	
-	//Sleep(1);
+	LARGE_INTEGER host_freq;
+	LARGE_INTEGER host_counter;
+
+	// 開始取得
+	QueryPerformanceCounter(&host_counter);
+	unsigned __int64 start_count = host_counter.QuadPart;
+
+	// 処理にかかった時間を計測
+	unsigned __int64 processed_count = start_count - init_host_counter.QuadPart;
+	if (!correction) {
+		processed_count = 0;
+	}
+
+	// ホストCPU周波数取得
+	QueryPerformanceFrequency(&host_freq);
+
+	// ホストCPU周波数 / セットしたい周波数
+	unsigned __int64 wait_time = host_freq.QuadPart / freq;
+
+	while (1) {
+		// 開始時からの差分
+		QueryPerformanceCounter(&host_counter);
+		unsigned __int64 end_count = host_counter.QuadPart;
+
+		if (wait_time - processed_count <= end_count - start_count) {
+			break;
+		}
+
+	}
+
 
 	return;
 }
 
 
+void ClockGenerator::setCorrectionClock(bool val) {
+	correction = val;
+}
 
 
 void ClockGenerator::confirmClock() {
 	/*
 	* クロックを確定
 	*/
-	system_clock::duration diff_time = (system_clock::now() - start);
+	LARGE_INTEGER cycle_end_counter;
+	LARGE_INTEGER host_freq;
 
-	try {
-		double_clock = 10000000.0 / diff_time.count();
-	}
-	catch (...){
-		double_clock = 0.0;
-	}
+	QueryPerformanceCounter(&cycle_end_counter);
+	QueryPerformanceFrequency(&host_freq);
 
-	try {
-		int64_clock = 10000000.0 / diff_time.count();
-	}
-	catch (...) {
-		int64_clock = 0.0;
-	}
+	unsigned __int64 diff_c =  host_freq.QuadPart / (double)(cycle_end_counter.QuadPart - init_host_counter.QuadPart);
 
+	double_clock = diff_c;
+	int64_clock = diff_c;
 
 }
 
