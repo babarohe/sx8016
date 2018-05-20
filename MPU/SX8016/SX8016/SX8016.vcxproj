@@ -157,6 +157,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SX8016.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClockGenerator.cpp" />
@@ -170,6 +171,7 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SX8016.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
