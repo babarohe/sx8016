@@ -20,6 +20,7 @@ void ClockGenerator::generateClock(int freq) {
 
 	// ŠJnæ“¾
 	QueryPerformanceCounter(&host_counter);
+
 	unsigned __int64 start_count = host_counter.QuadPart;
 
 	// ˆ—‚É‚©‚©‚Á‚½ŠÔ‚ğŒv‘ª
