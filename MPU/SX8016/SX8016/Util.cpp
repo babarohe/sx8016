@@ -7,6 +7,8 @@ void monitor(ClockGenerator *clock) {
 	double accumulation_clock = 0.0;
 	int i = 0;
 
+	//__int128;
+
 	LARGE_INTEGER freq;
 
 	while (1) {
