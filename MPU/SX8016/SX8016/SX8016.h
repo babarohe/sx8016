@@ -1,5 +1,6 @@
 #pragma once
 #include "Bus.h"
+#include "ram.h"
 
 #define R0 0x00
 #define R1 0x01
@@ -21,7 +22,7 @@
 
 class SX8016 {
 public:
-	SX8016(Bus *arg_bus);
+	SX8016(Bus *arg_bus, Ram64k *ram);
 	void clock();
 	void reset();
 
@@ -42,8 +43,9 @@ private:
 	// register
 	unsigned __int16 reg[REGISTER_NUM];
 	Bus *bus;
+	Ram64k *ram;
 	
-
+	
 	unsigned __int64 f_d_bus[INSTRUCTION_SIZE];
 
 	

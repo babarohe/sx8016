@@ -2,8 +2,9 @@
 
 
 
-SX8016::SX8016(Bus *arg_bus) {
+SX8016::SX8016(Bus *arg_bus, Ram64k *ram) {
 	this->bus = arg_bus;
+	this->ram = ram;
 	reset();
 }
 
@@ -36,8 +37,12 @@ void SX8016::fetch() {
 
 	for (int i = 0; i < INSTRUCTION_SIZE; i++) {
 		bus->addr_bus = (unsigned __int16)(reg[PC] + i);
+		ram->clock();
 		f_d_bus[i] = bus->data_bus;
 	}
+
+	std::cout << bus->addr_bus << std::endl;
+	std::cout << bus->data_bus << std::endl;
 
 	reg[PC] += INSTRUCTION_SIZE;
 

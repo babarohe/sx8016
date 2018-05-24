@@ -106,6 +106,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <ForcedUsingFiles>std;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <ForcedUsingFiles>std;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +156,7 @@
     <ClInclude Include="ClockGenerator.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="RAM.h" />
+    <ClInclude Include="ROM.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SX8016.h" />
     <ClInclude Include="targetver.h" />
@@ -163,6 +166,7 @@
     <ClCompile Include="ClockGenerator.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="RAM.cpp" />
+    <ClCompile Include="ROM.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

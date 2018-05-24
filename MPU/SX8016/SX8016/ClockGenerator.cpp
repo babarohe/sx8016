@@ -24,8 +24,8 @@ void ClockGenerator::generateClock(int freq) {
 	unsigned __int64 start_count = host_counter.QuadPart;
 
 	// ˆ—‚É‚©‚©‚Á‚½ŠÔ‚ğŒv‘ª
-	unsigned __int64 processed_count = start_count - init_host_counter.QuadPart;
-	if (!correction) {
+	__int64 processed_count = start_count - init_host_counter.QuadPart;
+	if (!correction || processed_count < 0) {
 		processed_count = 0;
 	}
 
