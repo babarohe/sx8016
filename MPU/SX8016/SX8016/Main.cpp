@@ -27,7 +27,7 @@ int main()
 	
 
 	ClockGenerator *clock = new ClockGenerator();
-	clock->setCorrectionClock(true);
+	clock->setCorrectionClock(false);
 
 	Bus *bus = new Bus();
 	Ram64k *ram = new Ram64k(bus, MAX_RAM_SIZE);
@@ -42,8 +42,9 @@ int main()
 
 		sx8k->clock();
 
+		//cout << sx8k->getRegister(PC) << endl;
 
-		clock->generateClock(1070000);
+		clock->generateClock(10000);
 		clock->confirmClock();
 
 	}

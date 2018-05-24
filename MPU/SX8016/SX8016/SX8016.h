@@ -16,6 +16,7 @@
 #define PC 0x0F
 #define REGISTER_NUM 16
 
+#define INSTRUCTION_SIZE 3
 
 
 class SX8016 {
@@ -32,11 +33,19 @@ public:
 	void wbReg();
 	void wbMem();
 
+	void useRam(bool is_write=false);
+	void useIO(bool is_write=false);
+
+	unsigned __int16 getRegister(int reg_id);
+
 private:
 	// register
-	unsigned __int16 registers[REGISTER_NUM];
+	unsigned __int16 reg[REGISTER_NUM];
 	Bus *bus;
 	
+
+	unsigned __int64 f_d_bus[INSTRUCTION_SIZE];
+
 	
 };
 

@@ -93,6 +93,7 @@ void getSystemInformation() {
 	//	mov REG_ecx, ecx;
 	//}
 
+
 #ifdef _AMD64_
 	cout << "SX8016 Emulator (x64)" << endl;
 #else
