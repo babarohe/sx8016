@@ -1,6 +1,5 @@
 #include "RAM.h"
 
-
 Ram64k::Ram64k(Bus *arg_bus, int ram_size) {
 	bus = arg_bus;
 	size = ram_size;

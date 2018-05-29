@@ -19,6 +19,12 @@
 
 #define INSTRUCTION_SIZE 3
 
+#define NOT_USE_BUS			0x00
+#define USE_BUS_RAM_READ	0x11
+#define USE_BUS_RAM_WRITE	0x12
+#define USE_BUS_IO_READ		0x21
+#define USE_BUS_IO_WRITE	0x22
+
 
 class SX8016 {
 public:
@@ -34,8 +40,8 @@ public:
 	void wbReg();
 	void wbMem();
 
-	void useRam(bool is_write=false);
-	void useIO(bool is_write=false);
+	void setBusMode(int mode);
+
 
 	unsigned __int16 getRegister(int reg_id);
 

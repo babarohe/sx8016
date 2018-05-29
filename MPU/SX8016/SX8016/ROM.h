@@ -4,7 +4,7 @@
 
 class ROM {
 public:
-	ROM(Bus *arg_bus, int ram_size);
+	ROM(Bus *arg_bus, int rom_size = 65536);
 	~ROM();
 
 	void clock();

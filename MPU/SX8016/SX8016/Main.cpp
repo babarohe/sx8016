@@ -1,6 +1,7 @@
 #include "ClockGenerator.h"
 #include "SX8016.h"
 #include "RAM.h"
+#include "ROM.h"
 #include "Util.h"
 
 const char AA[] = R"(/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
@@ -28,12 +29,13 @@ int main()
 
 	ClockGenerator *clock = new ClockGenerator();
 	clock->setCorrectionClock(false);
-
+	
 	Bus *bus = new Bus();
 	Ram64k *ram = new Ram64k(bus, MAX_RAM_SIZE);
+	ROM *rom = new ROM(bus);
 	SX8016 *sx8k = new SX8016(bus, ram);
 
-	auto mon = thread(monitor, clock);
+	//auto mon = thread(monitor, clock);
 
 	Sleep(20);
 
@@ -44,7 +46,7 @@ int main()
 
 		//cout << sx8k->getRegister(PC) << endl;
 
-		clock->generateClock(1);
+		clock->generateClock(2);
 		clock->confirmClock();
 
 	}
@@ -53,6 +55,8 @@ int main()
 	// memory release
 	delete(clock);
 	delete(bus);
+	delete(ram);
+	delete(rom);
 	delete(sx8k);
 
 

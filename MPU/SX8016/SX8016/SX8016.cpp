@@ -23,8 +23,7 @@ void SX8016::clock() {
 
 
 void SX8016::reset() {
-	useRam();
-
+	// Init registor
 	for (int i = 0; i < REGISTER_NUM; i++) {
 		reg[i] = 0;
 	}
@@ -34,6 +33,8 @@ void SX8016::reset() {
 
 
 void SX8016::fetch() {
+	// RAMŽg—p
+	setBusMode(USE_BUS_IO_READ);
 
 	for (int i = 0; i < INSTRUCTION_SIZE; i++) {
 		bus->addr_bus = (unsigned __int16)(reg[PC] + i);
@@ -41,12 +42,11 @@ void SX8016::fetch() {
 		f_d_bus[i] = bus->data_bus;
 	}
 
-	std::cout << bus->addr_bus << std::endl;
-	std::cout << bus->data_bus << std::endl;
+	std::cout << "addr-> " << bus->addr_bus << std::endl;
+	std::cout << "data-> " << (int)bus->data_bus << std::endl;
+
 
 	reg[PC] += INSTRUCTION_SIZE;
-
-
 
 }
 
@@ -70,34 +70,38 @@ void SX8016::cpuCtrl() {
 
 }
 
-void SX8016::useRam(bool is_write) {
-	bus->ctrl_merq = true;
-	bus->ctrl_iorq = false;
-	
-	if (is_write) {
+void SX8016::setBusMode(int mode) {
+	switch (mode) {
+	case NOT_USE_BUS:
+		bus->ctrl_merq = false;
+		bus->ctrl_iorq = false;
 		bus->ctrl_rd = false;
-		bus->ctrl_wr = true;
-
-	}
-	else {
+		bus->ctrl_wr = false;
+		break;
+	case USE_BUS_RAM_READ:
+		bus->ctrl_merq = true;
+		bus->ctrl_iorq = false;
 		bus->ctrl_rd = true;
 		bus->ctrl_wr = false;
-	}
-
-}
-
-void SX8016::useIO(bool is_write) {
-	bus->ctrl_merq = false;
-	bus->ctrl_iorq = true;
-
-	if (is_write) {
+		break;
+	case USE_BUS_RAM_WRITE:
+		bus->ctrl_merq = true;
+		bus->ctrl_iorq = false;
 		bus->ctrl_rd = false;
 		bus->ctrl_wr = true;
-
-	}
-	else {
+		break;
+	case USE_BUS_IO_READ:
+		bus->ctrl_merq = false;
+		bus->ctrl_iorq = true;
 		bus->ctrl_rd = true;
 		bus->ctrl_wr = false;
+		break;
+	case USE_BUS_IO_WRITE:
+		bus->ctrl_merq = false;
+		bus->ctrl_iorq = true;
+		bus->ctrl_rd = false;
+		bus->ctrl_wr = true;
+		break;
 	}
 
 }
