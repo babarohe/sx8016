@@ -50,6 +50,12 @@ private:
 	unsigned __int16 reg[REGISTER_NUM];
 	Bus *bus;
 	Ram64k *ram;
+
+	__int8 operand_instruction;
+	__int8 operand_addr;
+	__int8 operand_dest;
+	__int8 operand_src;
+
 	
 	
 	unsigned __int64 f_d_bus[INSTRUCTION_SIZE];

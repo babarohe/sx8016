@@ -51,7 +51,44 @@ void SX8016::fetch() {
 }
 
 void SX8016::decode() {
+	// データ取得
+	__int8 instruction_operand = f_d_bus[0];
+	__int8 left_operand = f_d_bus[1];
+	__int8 right_operand = f_d_bus[2];
 
+	// 命令上位1ビット解釈
+	switch (instruction_operand & 0b10000000) {
+	case(0b00000000):
+		// 8ビット命令
+		break;
+	case(0b10000000):
+		// 16ビット命令
+		break;
+	}
+
+	// 命令下位2ビット解釈
+	switch (instruction_operand & 0b00000011) {
+	case (0b00):
+		operand_addr = reg[left_operand];
+		operand_dest = reg[left_operand];
+		operand_src = reg[right_operand];
+		break;
+	case (0b01):
+		operand_addr = reg[left_operand];
+		operand_dest = reg[left_operand];
+		operand_src = right_operand;
+		break;
+	case (0b10):
+		operand_addr = left_operand;
+		operand_dest = left_operand;
+		operand_src = reg[right_operand];
+		break;
+	case (0b11):
+		operand_addr = left_operand;
+		operand_dest = left_operand;
+		operand_src = right_operand;
+		break;
+	}
 }
 
 void SX8016::execute() {
